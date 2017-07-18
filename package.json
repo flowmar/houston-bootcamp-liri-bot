@@ -1,0 +1,24 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "Application that showcases node.js",
+  "main": "liri.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowmar/liri-node-app.git"
+  },
+  "author": "Omar Imam <omar.imam@kineticvortex.com> (https://github.com/flowmar)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flowmar/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/flowmar/liri-node-app#readme",
+  "dependencies": {
+    "request": "2.81.0",
+    "spotify": "0.3.0",
+    "twitter": "1.7.1"
+  }
+}
