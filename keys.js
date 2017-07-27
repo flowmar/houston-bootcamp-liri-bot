@@ -8,5 +8,5 @@ var twitterKeys = {
 }
 
 
-exports.twitterKeys = twitterKeys;
-console.log("this is loaded");
+module.exports = twitterKeys;
+// console.log("this is loaded");

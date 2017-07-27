@@ -1,6 +1,13 @@
-var Twitter = require('twitter')
-var twitterKeys = require('./keys.js').twitterKeys;
+// Dependencies
+var Twitter = require('twitter');
+var twitterKeys = require('./keys.js');
+var spotify = require('spotify');
 
+
+// Declare variables
+var arguments = process.argv;
+
+// Authentication for Twitter
 var client = new Twitter({
     consumer_key: twitterKeys.consumer_key,
     consumer_secret: twitterKeys.consumer_secret,
@@ -8,29 +15,51 @@ var client = new Twitter({
     access_token_secret: twitterKeys.access_token_secret
 });
 
+/* console.log(client);
+
+ var stream = client.stream('user');
+
+stream.on('data', function (event) {
+    console.log(event && event.text);
+});
+
+stream.on('error', function (error) {
+    throw error;
+ });*/
+
+
+// console.log(arguments);
 // console.log(client);
 
-// var stream = client.stream('user');
+// If the command is 'my-tweets'...
+if (arguments[2] === "my-tweets") {
+    console.log("@Kiki_flyingman's Last 20 tweets:\n");
+    // Send a get request to grab the last 20 tweets from the indicated user's timeline
+    client.get('statuses/user_timeline', { screen_name: "kiki_flyingman", count: 20 }, function (error, tweets, response) {
 
-// stream.on('data', function (event) {
-//     console.log(event && event.text);
-// });
+        if (error) throw error;
 
-// stream.on('error', function (error) {
-//     throw error;
-// });
+        else {
+            // For all of the tweets that are in the response...
+            for (var i = 0; i < tweets.length; i++) {
+                // Log the tweet text to the console
+                console.log(((i + 1) + "." + tweets[i].text));
 
-
-client.get('statuses/user_timeline', { screen_name: "kvflow", count: 20 }, function (error, tweets, response) {
-    if (error) throw error;
-    else {
-        var count = 20;
-        for (var i = 0; i < count; i++) {
-            console.log(tweets[i].text);
-            // console.log(response);
+                // Log the time that the tweet was created
+                console.log("Created at: " + tweets[i].created_at + "\n");
+            }
         }
-    }
-});
+        // console.log(JSON.stringify(tweets, null, 2));
+    });
+}
+// If the command is 'spotify this song'...
+else if (arguments[2] === "spotify-this-song") {
+
+} else if (arguments[2] === "movie-this") {
+
+} else if (arguments[2] === "do-what-it-says") {
+
+}
 
 /* Liri needs to be able to take in the following:
 
