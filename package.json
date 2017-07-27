@@ -19,6 +19,7 @@
   "dependencies": {
     "request": "2.81.0",
     "spotify": "0.3.0",
-    "twitter": "1.7.1"
+    "twitter": "1.7.1",
+    "url-parse": "1.1.9"
   }
 }

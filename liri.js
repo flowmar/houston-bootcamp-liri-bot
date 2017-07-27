@@ -1,19 +1,31 @@
 // Dependencies
-var Twitter = require('twitter');
-var twitterKeys = require('./keys.js');
-var spotify = require('spotify');
+const Twitter = require('twitter');
 
+const twitterKeys = require('./keys.js');
+
+const spotify = require('spotify');
+
+const spotifyKeys = require("./spotify-keys.js");
+
+const request = require('request');
+
+var URL = require('url-parse');
 
 // Declare variables
 var arguments = process.argv;
 
 // Authentication for Twitter
-var client = new Twitter({
+const client = new Twitter({
     consumer_key: twitterKeys.consumer_key,
     consumer_secret: twitterKeys.consumer_secret,
     access_token_key: twitterKeys.access_token_key,
     access_token_secret: twitterKeys.access_token_secret
 });
+
+// Authentication for Spotify
+
+const clientId = spotifyKeys.clientId;
+const clientSecret = spotifyKeys.clientSecret;
 
 /* console.log(client);
 
@@ -54,12 +66,30 @@ if (arguments[2] === "my-tweets") {
 }
 // If the command is 'spotify this song'...
 else if (arguments[2] === "spotify-this-song") {
+    var url = new URL('https://accounts.spotify.com/api/token');
+    // var grant_type = 'client_credentials'
+    var options = {
+        url: url,
+        headers: {
+            Authorization: "Basic " + clientId + ":" + clientSecret + "=",
+        },
+        body: {
+            grant_type: 'client_credentials'
+        }
+    }
+};
+request.post(options, function (error, response) {
+    if (error) throw error;
+    else {
+        var accessToken = JSON.stringify(response, null, 2);
+        console.log(accessToken);
+    }
+});
+// } else if (arguments[2] === "movie-this") {
 
-} else if (arguments[2] === "movie-this") {
+// } else if (arguments[2] === "do-what-it-says") {
 
-} else if (arguments[2] === "do-what-it-says") {
-
-}
+// }
 
 /* Liri needs to be able to take in the following:
 
