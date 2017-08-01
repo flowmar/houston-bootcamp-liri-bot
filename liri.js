@@ -72,6 +72,7 @@ if (arguments[2] === "my-tweets") {
 // If the command is 'spotify this song'...
 else if (arguments[2] === "spotify-this-song") {
     var song = arguments[3];
+    var artist = arguments[4];
     var spotifyApi = new SpotifyWebApi({
         clientId: clientId,
         clientSecret: clientSecret
@@ -86,11 +87,18 @@ else if (arguments[2] === "spotify-this-song") {
         console.log('Something went wrong when retrieving an access token', err);
     })
 
-        // Get Elvis' albums
         .then(function () {
-            spotifyApi.searchTracks(song)
+            spotifyApi.searchTracks('track:' + song + ' artist:' + artist)
                 .then(function (data) {
-                    console.log('Search by ' + song, data.body.tracks);
+                    console.log('You searched for \nTrack: ' + song + '\nArtist: ' + artist);
+                    console.log('\nThere are ' + data.body.tracks.total + ' total results. \nHere is the top result:');
+                    console.log("Track: " + data.body.tracks.items[0].name);
+                    console.log("Artist: " + data.body.tracks.items[0].artists[0].name);
+                    console.log("Album: " + data.body.tracks.items[0].album.name);
+                    console.log("Link: " + data.body.tracks.items[0].album.external_urls.spotify);
+
+
+
                 }, function (err) {
                     console.error(err);
                 });
