@@ -3,13 +3,15 @@ const Twitter = require('twitter');
 
 const twitterKeys = require('./keys.js');
 
-const spotify = require('spotify');
+const SpotifyWebApi = require('spotify-web-api-node');
 
 const spotifyKeys = require("./spotify-keys.js");
 
 const request = require('request');
 
 var URL = require('url-parse');
+
+var fs = require('fs');
 
 // Declare variables
 var arguments = process.argv;
@@ -26,6 +28,9 @@ const client = new Twitter({
 
 const clientId = spotifyKeys.clientId;
 const clientSecret = spotifyKeys.clientSecret;
+const redirectUri = "http://localhost:8888/callback";
+
+
 
 /* console.log(client);
 
@@ -66,29 +71,36 @@ if (arguments[2] === "my-tweets") {
 }
 // If the command is 'spotify this song'...
 else if (arguments[2] === "spotify-this-song") {
-    var url = new URL('https://accounts.spotify.com/api/token');
-    // var grant_type = 'client_credentials'
-    var options = {
-        url: url,
-        headers: {
-            Authorization: "Basic " + clientId + ":" + clientSecret + "=",
-        },
-        body: {
-            grant_type: 'client_credentials'
-        }
-    }
+    var song = arguments[3];
+    var spotifyApi = new SpotifyWebApi({
+        clientId: clientId,
+        clientSecret: clientSecret
+    });
+
+    spotifyApi.clientCredentialsGrant().then(function (data) {
+        console.log('The access token expires in ' + data.body['expires_in']);
+        console.log('The access token is ' + data.body['access_token']);
+
+        spotifyApi.setAccessToken(data.body['access_token']);
+    }, function (err) {
+        console.log('Something went wrong when retrieving an access token', err);
+    })
+
+        // Get Elvis' albums
+        .then(function () {
+            spotifyApi.searchTracks(song)
+                .then(function (data) {
+                    console.log('Search by ' + song, data.body.tracks);
+                }, function (err) {
+                    console.error(err);
+                });
+        })
 };
-request.post(options, function (error, response) {
-    if (error) throw error;
-    else {
-        var accessToken = JSON.stringify(response, null, 2);
-        console.log(accessToken);
-    }
-});
+
 // } else if (arguments[2] === "movie-this") {
 
 // } else if (arguments[2] === "do-what-it-says") {
-
+// fs.open('random.txt')
 // }
 
 /* Liri needs to be able to take in the following:
