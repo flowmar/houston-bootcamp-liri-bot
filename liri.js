@@ -9,28 +9,18 @@ const spotifyKeys = require("./spotify-keys.js");
 
 const request = require('request');
 
-var URL = require('url-parse');
-
 var fs = require('fs');
 
 // Declare variables
 var arguments = process.argv;
 
 // Authentication for Twitter
-const client = new Twitter({
-    consumer_key: twitterKeys.consumer_key,
-    consumer_secret: twitterKeys.consumer_secret,
-    access_token_key: twitterKeys.access_token_key,
-    access_token_secret: twitterKeys.access_token_secret
-});
+const client = new Twitter({consumer_key: twitterKeys.consumer_key, consumer_secret: twitterKeys.consumer_secret, access_token_key: twitterKeys.access_token_key, access_token_secret: twitterKeys.access_token_secret});
 
 // Authentication for Spotify
 
 const clientId = spotifyKeys.clientId;
 const clientSecret = spotifyKeys.clientSecret;
-const redirectUri = "http://localhost:8888/callback";
-
-
 
 /* console.log(client);
 
@@ -44,19 +34,20 @@ stream.on('error', function (error) {
     throw error;
  });*/
 
-
-// console.log(arguments);
-// console.log(client);
-
-// If the command is 'my-tweets'...
+// console.log(arguments); console.log(client); If the command is 'my-tweets'...
 if (arguments[2] === "my-tweets") {
     console.log("@Kiki_flyingman's Last 20 tweets:\n");
-    // Send a get request to grab the last 20 tweets from the indicated user's timeline
-    client.get('statuses/user_timeline', { screen_name: "kiki_flyingman", count: 20 }, function (error, tweets, response) {
+    // Send a get request to grab the last 20 tweets from the indicated user's
+    // timeline
+    client.get('statuses/user_timeline', {
+        screen_name: "kiki_flyingman",
+        count: 20
+    }, function (error, tweets, response) {
 
-        if (error) throw error;
-
-        else {
+        if (error) 
+            throw error;
+        
+else {
             // For all of the tweets that are in the response...
             for (var i = 0; i < tweets.length; i++) {
                 // Log the tweet text to the console
@@ -67,28 +58,45 @@ if (arguments[2] === "my-tweets") {
             }
         }
         // console.log(JSON.stringify(tweets, null, 2));
-    });
-}
-// If the command is 'spotify this song'...
-else if (arguments[2] === "spotify-this-song") {
+    } // If the command is 'spotify this song'...
+    );
+} else if (arguments[2] === "spotify-this-song") {
+
+    // Set song equal to the 4th argument
     var song = arguments[3];
+
+    // Set artist equatl to the 5th argument
     var artist = arguments[4];
-    var spotifyApi = new SpotifyWebApi({
-        clientId: clientId,
-        clientSecret: clientSecret
-    });
 
-    spotifyApi.clientCredentialsGrant().then(function (data) {
-        console.log('The access token expires in ' + data.body['expires_in']);
-        console.log('The access token is ' + data.body['access_token']);
+    // Create a new instance of the SpotifyWebApi client
+    var spotifyApi = new SpotifyWebApi({clientId: clientId, clientSecret: clientSecret});
 
-        spotifyApi.setAccessToken(data.body['access_token']);
-    }, function (err) {
-        console.log('Something went wrong when retrieving an access token', err);
-    })
+    // If the there is no song, default to "Saw the Sign"
+    if (arguments[3] == "") {
+        song = "Saw the Sign";
+    };
 
+    // If there is no Artist, default to "Ace of Base"
+    if (arguments[4] == "") {
+        artist = "Ace of Base";
+    };
+
+    // Use the send the client credentials to the server to return an access token
+    spotifyApi
+        .clientCredentialsGrant()
+        .then(function (data) {
+            // console.log('The access token expires in ' + data.body['expires_in']);
+            // console.log('The access token is ' + data.body['access_token']); Set the
+            // returned access token
+            spotifyApi.setAccessToken(data.body['access_token']);
+        }, function (err) {
+            console.log('Something went wrong when retrieving an access token', err);
+        })
+        // After the access token is set, search for the track and artist and return the
+        // top result
         .then(function () {
-            spotifyApi.searchTracks('track:' + song + ' artist:' + artist)
+            spotifyApi
+                .searchTracks('track:' + song + ' artist:' + artist)
                 .then(function (data) {
                     console.log('You searched for \nTrack: ' + song + '\nArtist: ' + artist);
                     console.log('\nThere are ' + data.body.tracks.total + ' total results. \nHere is the top result:');
@@ -97,35 +105,33 @@ else if (arguments[2] === "spotify-this-song") {
                     console.log("Album: " + data.body.tracks.items[0].album.name);
                     console.log("Link: " + data.body.tracks.items[0].album.external_urls.spotify);
 
-
-
+                    // If there is an error, log the error to the console
                 }, function (err) {
                     console.error(err);
                 });
-        })
+        });
+} else if (arguments[2] === "movie-this") {
+    var movie = arguments[3];
+    var queryURL = "http://www.omdbapi.com/?apikey=d4444e5f&t=" + movie
+    request(queryURL, function (error, response, body) {
+        if (error) 
+            throw error;
+        
+        console.log(JSON.stringify(response.body.title, null, 2));
+        // console.log('Title: ', body.title);
+    });
+} else if (arguments[2] === "do-what-it-says") {
+    var command = ""
+    fs.readFile('./random.txt', 'utf-8', (err, data) => {
+        if (err) 
+            throw err;
+        console.log(data);
+        command = data;
+    });
+    console.log(command);
 };
 
-// } else if (arguments[2] === "movie-this") {
-
-// } else if (arguments[2] === "do-what-it-says") {
-// fs.open('random.txt')
-// }
-
-/* Liri needs to be able to take in the following:
-
-node liri.js [command]
-
-|my-tweets
-||| This will show your last 20 tweets and when they were created at in your terminal/bash window
-
-|spotify-this-song '<song name here>'
-||| This will show the following information about the song in your terminal window:
---Artists
---Song Name
---Spotify Preview Link
---Album that the Song is from
--- If no song, default to "The Sign" by Ace of Base
-
+/*
 |movie-this '<movie name here>'
 ||| This will output:
 - Movie Title
