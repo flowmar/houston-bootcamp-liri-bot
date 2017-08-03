@@ -112,6 +112,9 @@ else {
         });
 } else if (arguments[2] === "movie-this") {
     var movie = arguments[3];
+    if (arguments[3] === "") {
+        movie = "Mr. Nobody";
+    }
     var queryURL = "http://www.omdbapi.com/?apikey=d4444e5f&t=" + movie
     request(queryURL, function (error, response, body) {
         if (error) 
@@ -125,7 +128,6 @@ else {
         console.log("Plot: ", res.Plot);
         console.log("Actors: ", res.Actors);
         console.log("Website: ", res.Website);
-        // console.log('Title: ', body.title);
     });
 } else if (arguments[2] === "do-what-it-says") {
     var command = ""
