@@ -116,8 +116,15 @@ else {
     request(queryURL, function (error, response, body) {
         if (error) 
             throw error;
-        
-        console.log(JSON.stringify(response.body.title, null, 2));
+        var res = JSON.parse(body);
+        console.log("Title: ", res.Title);
+        console.log("Year", res.Year);
+        console.log("imdb Rating: ", res.Ratings[0].Value);
+        console.log("Production: ", res.Production);
+        console.log("Language: ", res.Language);
+        console.log("Plot: ", res.Plot);
+        console.log("Actors: ", res.Actors);
+        console.log("Website: ", res.Website);
         // console.log('Title: ', body.title);
     });
 } else if (arguments[2] === "do-what-it-says") {
