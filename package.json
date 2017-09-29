@@ -2,9 +2,9 @@
   "name": "liri-node-app",
   "version": "1.0.0",
   "description": "Application that showcases node.js",
-  "main": "liri.js",
+  "main": "main.js",
   "scripts": {
-    "test": "npm start"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",

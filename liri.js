@@ -44,9 +44,9 @@ if (arguments[2] === "my-tweets") {
         count: 20
     }, function (error, tweets, response) {
 
-        if (error) 
+        if (error)
             throw error;
-        
+
 else {
             // For all of the tweets that are in the response...
             for (var i = 0; i < tweets.length; i++) {
@@ -117,9 +117,10 @@ else {
     }
     var queryURL = "http://www.omdbapi.com/?apikey=d4444e5f&t=" + movie
     request(queryURL, function (error, response, body) {
-        if (error) 
+        if (error)
             throw error;
         var res = JSON.parse(body);
+
         console.log("Title: ", res.Title);
         console.log("Year", res.Year);
         console.log("imdb Rating: ", res.Ratings[0].Value);
@@ -132,7 +133,7 @@ else {
 } else if (arguments[2] === "do-what-it-says") {
     var command = ""
     fs.readFile('./random.txt', 'utf-8', (err, data) => {
-        if (err) 
+        if (err)
             throw err;
         console.log(data);
         command = data;
