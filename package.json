@@ -2,7 +2,7 @@
   "name": "liri-node-app",
   "version": "1.0.0",
   "description": "Application that showcases node.js",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron ."
   },
