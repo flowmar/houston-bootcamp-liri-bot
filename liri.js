@@ -6,7 +6,7 @@ const twitterKeys = require('./keys.js');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 const spotifyKeys = require('./spotify-keys.js');
-
+const keys = require('./config.js');
 const request = require('request');
 
 var fs = require('fs');
@@ -138,7 +138,7 @@ if (arguments[2] === 'my-tweets') {
   if (arguments[3] === '') {
     movie = 'Mr. Nobody';
   }
-  var queryURL = 'http://www.omdbapi.com/?apikey=d4444e5f&t=' + movie;
+  var queryURL = keys.omdb_key_url + movie;
   request(queryURL, function(error, response, body) {
     if (error) throw error;
     var res = JSON.parse(body);

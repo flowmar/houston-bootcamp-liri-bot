@@ -1,5 +1,5 @@
 # **LIRI-tron**
-## *Concepts: Node.js*
+## *Concepts: Node.js, API Calls*
 
 ---
 
@@ -55,9 +55,9 @@ LIRI stands for "Language Interpretation and Recognition Interface". For this pr
 
                * Step One: Visit <https://apps.twitter.com/app/new>
                * Step Two: Fill out the form with dummy data. Type `http://google.com` in the Website input. Don't fill out the Callback URL input. Then submit the form.
-               * Step Three: On the next screen, click the Keys and Access Tokens tab to get your consume key and secret. 
+               * Step Three: On the next screen, click the Keys and Access Tokens tab to get your consume key and secret.
                      * Copy and paste them where the `<input here>` tags are inside your keys.js file.
-               * Step Four: At the bottom of the page, click the `Create my access token` button to get your access token key and secret. 
+               * Step Four: At the bottom of the page, click the `Create my access token` button to get your access token key and secret.
                  * Copy the access token key and secret displayed at the bottom of the next screen. Paste them where the `<input here>` tags are inside your keys.js file.
 
             4. Make a file called `random.txt`.
@@ -113,7 +113,7 @@ LIRI stands for "Language Interpretation and Recognition Interface". For this pr
 
                * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
                  * If you haven't watched "Mr. Nobody," then you should: <http://www.imdb.com/title/tt0485947/>
-                 * It's on Netflix! 
+                 * It's on Netflix!
 
 4. `node liri.js do-what-it-says`
           * Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
@@ -123,8 +123,8 @@ LIRI stands for "Language Interpretation and Recognition Interface". For this pr
             ### BONUS
 
             * In addition to logging the data to your terminal/bash window, output the data to a .txt file called `log.txt`.
-    
-            * Make sure you append each command you run to the `log.txt` file. 
+
+            * Make sure you append each command you run to the `log.txt` file.
 
         * Do not overwrite your file each time you run a command.
 
@@ -144,10 +144,10 @@ LIRI stands for "Language Interpretation and Recognition Interface". For this pr
 
 ## Deployment
 
-The project was deployed to GitHub pages as:
-[gifs-in-a-jiffy](https://flowmar.github.io/liri-bot)
+This is a command line application, and therefore does not have a displayable front-end.
+Instead, I have included screenshots of the application's functionality [here](https://flowmar.gwiddle.co.uk/projects/3-back-end/1-liri-bot-node/liri-screenshots.html)
 
-The source code is located [here](https://github.com/liri-bot).
+The source code is located [here](https://github.com/flowmar/liri-bot).
 
 ---
 
@@ -156,5 +156,5 @@ The source code is located [here](https://github.com/liri-bot).
 ### Omar Imam
 
 Find me on: [GitHub](https://github.com/flowmar/)
-Portfolio: [Flowmar](https://flowmar.gwiddle.co.uk/)
+Portfolio: [Flowmar](https://flowmar.tech)
 Connect with me on [LinkedIn](https://linkedin.com/in/flowmar)
