@@ -20,6 +20,6 @@
     "request": "2.81.0",
     "spotify-web-api-node": "2.4.0",
     "twitter": "1.7.1",
-    "url-parse": "1.4.3"
+    "url-parse": "1.5.0"
   }
 }
